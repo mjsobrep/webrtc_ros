@@ -47,11 +47,11 @@ class IceServerManager(object):
                 serv = IceServer()
                 serv.username = turn_creds['username']
                 serv.password = turn_creds['password']
-                resp.survers.append(serv)
+                resp.servers.append(serv)
         for suri in self.stun_servers:
             serv = IceServer()
             serv.uri = suri
-            resp.survers.append(serv)
+            resp.servers.append(serv)
         return resp
 
 
