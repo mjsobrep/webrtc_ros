@@ -4,7 +4,7 @@ import json
 import rospy
 import requests
 from webrtc_ros.msg import IceServer
-from webrtc_ros.srv import GetIceServer, GetIceServerResponse
+from webrtc_ros.srv import GetIceServers, GetIceServersResponse
 
 
 class IceServerManager(object):
