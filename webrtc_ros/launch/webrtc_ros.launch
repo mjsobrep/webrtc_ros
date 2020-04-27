@@ -13,7 +13,9 @@
     <!--Turn servers are used to route traffic from behind challenging networks.-->
     <!--Not always needed, but in some corporate environments it might be. -->
     <!--This is the url of the turn server (Ex: coturn)-->
-    <param name="turn_server_uri" value=""/>
+    <rosparam param="turn_server_uris">
+        []
+    </rosparam>
     <!--You need credentials to access your turn server. The best way to do-->
     <!--that (the way we support) is to use a seperate rest api with a shared-->
     <!--secret with coturn. This is the uri, username, and password that will -->
