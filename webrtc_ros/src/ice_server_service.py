@@ -23,7 +23,7 @@ class IceServerManager(object):
             'turn_server_creds_password', '')
 
         self.get_ice_servers_service = rospy.Service(
-            'get_ice_servers', GetIceServer, self.get_ice_servers)
+            'get_ice_servers', GetIceServers, self.get_ice_servers)
 
         rospy.loginfo('Ice Server Provider Up')
         rospy.spin()
@@ -40,7 +40,7 @@ class IceServerManager(object):
 
     def get_ice_servers(self, _):
         """Callback for service. Returns the ice servers"""
-        resp = GetIceServerResponse()
+        resp = GetIceServersResponse()
         turn_creds = self.get_turn_creds()
         if turn_creds:
             for uri in self.turn_server_uris:
