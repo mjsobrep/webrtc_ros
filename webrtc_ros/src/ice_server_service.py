@@ -15,7 +15,7 @@ class IceServerManager(object):
 
         self.stun_servers = rospy.get_param('stun_servers', [
             'stun:stun1.l.google.com:19302', 'stun:stun2.l.google.com:19302'])
-        self.turn_server_uri = rospy.get_param('turn_server_uri', '')
+        self.turn_server_uris = rospy.get_param('turn_server_uris', '')
         self.turn_creds_uri = rospy.get_param('turn_server_creds_uri', '')
         self.turn_creds_username = rospy.get_param(
             'turn_server_creds_username', '')
@@ -43,11 +43,11 @@ class IceServerManager(object):
         resp = GetIceServerResponse()
         turn_creds = self.get_turn_creds()
         if turn_creds:
-            serv = IceServer()
-            serv.uri = self.turn_server_uri
-            serv.username = self.turn_creds_username
-            serv.password = self.turn_creds_password
-            resp.survers.append(serv)
+            for uri in self.turn_server_uris:
+                serv = IceServer()
+                serv.username = turn_creds['username']
+                serv.password = turn_creds['password']
+                resp.survers.append(serv)
         for suri in self.stun_servers:
             serv = IceServer()
             serv.uri = suri
