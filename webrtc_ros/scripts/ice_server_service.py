@@ -47,6 +47,8 @@ class IceServerManager(object):
                 rospy.logerr(
                     'server did not respond with JSON, response code: %i',
                     resp.status_code)
+        else:
+            rospy.logdebug('No uri provided for turn credentials')
         return False
 
     def get_ice_servers(self, _):
