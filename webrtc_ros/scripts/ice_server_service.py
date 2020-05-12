@@ -31,11 +31,22 @@ class IceServerManager(object):
     def get_turn_creds(self):
         """Get the credentials from the turn server."""
         if self.turn_creds_uri:
+            rospy.logdebug('getting turn server credentials')
             resp = requests.post(self.turn_creds_uri,
                                  {'username': self.turn_creds_username,
                                   'password':  self.turn_creds_password})
-            if(('username' in resp.data) and ('password' in resp.data)):
-                return resp.data
+            try:
+                rospy.loginfo('trying to parse response from server')
+                data = resp.json()
+                if('username' in data and 'password' in data):
+                    rospy.loginfo('succesfully received turn credentials')
+                    return data
+                rospy.logwarn(
+                    'response did not have username and password fields')
+            except AttributeError:
+                rospy.logerr(
+                    'server did not respond with JSON, response code: %i',
+                    resp.status_code)
         return False
 
     def get_ice_servers(self, _):
@@ -45,7 +56,7 @@ class IceServerManager(object):
         if turn_creds:
             for uri in self.turn_server_uris:
                 serv = IceServer()
-                serv.ure = uri
+                serv.uri = uri
                 serv.username = turn_creds['username']
                 serv.password = turn_creds['password']
                 resp.servers.append(serv)
