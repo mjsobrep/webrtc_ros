@@ -23,7 +23,7 @@ class IceServerManager(object):
             '~turn_server_creds_password', '')
 
         self.get_ice_servers_service = rospy.Service(
-            '~get_ice_servers', GetIceServers, self.get_ice_servers)
+            'get_ice_servers', GetIceServers, self.get_ice_servers)
 
         rospy.loginfo('Ice Server Provider Up')
         rospy.spin()
