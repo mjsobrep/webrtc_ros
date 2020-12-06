@@ -16,5 +16,6 @@ elif [ "bn" = "webrtc_ros" ]
 else
     echo "no clue where you are: $bn"
 fi
-docker build -f dockerfiles/full_build -t webrtc_ros/develop-fullbuild:latest .
+docker build -f dockerfiles/full_build --build-arg ROS_VERSION=melodic -t webrtc_ros/develop-fullbuild:melodic .
+docker build -f dockerfiles/full_build --build-arg ROS_VERSION=noetic -t webrtc_ros/develop-fullbuild:noetic .
 cd $prior

@@ -15,8 +15,11 @@ RUN apt-get update && \
 
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
-        git
+        git\
+        curl\
+        wget
 
+RUN wget http://techslides.com/demos/sample-videos/small.mp4 -O /tmp/small.mp4
 
 RUN apt-get install -y --no-install-recommends gmodule-2.0 libgtk-3-dev libglib2.0-dev pulseaudio libasound2-dev libpulse-dev ros-${ROS_VERSION}-image-transport ninja-build stow
 
@@ -37,8 +40,15 @@ COPY . /home/webrtc_ws/src/
 
 RUN git clone https://github.com/GT-RAIL/async_web_server_cpp.git /home/webrtc_ws/src/async_web_server_cpp/
 
+RUN git clone --depth 1 https://github.com/ros-drivers/video_stream_opencv.git /home/webrtc_ws/src/video_stream_opencv/
+
 RUN /ros_entrypoint.sh catkin_make_isolated \
     && sed -i '$isource "/home/webrtc_ws/devel_isolated/webrtc/setup.bash"' /ros_entrypoint.sh \
     && sed -i '$isource "/home/webrtc_ws/devel_isolated/webrtc_ros/setup.bash"' /ros_entrypoint.sh
 
-ENTRYPOINT ["/ros_entrypoint.sh"]
+COPY dockerfiles/test-script.sh test-script.sh
+RUN chmod +x test-script.sh
+
+EXPOSE 8080
+
+CMD ./test-script.sh
