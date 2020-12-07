@@ -40,6 +40,7 @@ COPY . /home/webrtc_ws/src/
 
 RUN git clone https://github.com/GT-RAIL/async_web_server_cpp.git /home/webrtc_ws/src/async_web_server_cpp/
 
+RUN apt-get update -y && apt-get install -y --no-install-recommends ros-${ROS_VERSION}-camera-info-manager
 RUN git clone --depth 1 https://github.com/ros-drivers/video_stream_opencv.git /home/webrtc_ws/src/video_stream_opencv/
 
 RUN /ros_entrypoint.sh catkin_make_isolated \
